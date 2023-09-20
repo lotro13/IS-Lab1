@@ -78,8 +78,9 @@ w1 = randn(1);
 w2 = randn(1);
 b = randn(1);
 
+% FIRST ----------------
 % calculate weighted sum with randomly generated parameters
-%v1 = <...>; % write your code here
+v1 = x1(1) * w1 + x2(1) * w2 + b;
 % calculate current output of the perceptron 
 if v1 > 0
 	y = 1;
@@ -88,10 +89,12 @@ else
 end
 % calculate the error
 e1 = T(1) - y;
+% ---------------------------
 
 % repeat the same for the rest 4 inputs x1 and x2
 % calculate wieghted sum with randomly generated parameters
-% v2 = <...> ; % write your code here
+%SECOND ----------------------
+v2 = x1(2) * w1 + x2(2) * w2 + b;
 % calculate current output of the perceptron 
 if v2 > 0
 	y = 1;
@@ -100,32 +103,97 @@ else
 end
 % calculate the error
 e2 = T(2) - y;
-
-% <...> write the code for another 3 inputs
+% ---------------------------
+%THIRD ----------------------
+v3 = x1(3) * w1 + x2(3) * w2 + b;
+% calculate current output of the perceptron 
+if v3 > 0
+	y = 1;
+else
+	y = -1;
+end
+% calculate the error
+e3 = T(3) - y;
+% ---------------------------
+%FOURTH ----------------------
+v4 = x1(4) * w1 + x2(4) * w2 + b;
+% calculate current output of the perceptron 
+if v4 > 0
+	y = 1;
+else
+	y = -1;
+end
+% calculate the error
+e4 = T(4) - y;
+% ---------------------------
+%FIFTH ----------------------
+v5 = x1(5) * w1 + x2(5) * w2 + b;
+% calculate current output of the perceptron 
+if v5 > 0
+	y = 1;
+else
+	y = -1;
+end
+% calculate the error
+e5 = T(5) - y;
+% ---------------------------
 
 % calculate the total error for these 5 inputs 
 e = abs(e1) + abs(e2) + abs(e3) + abs(e4) + abs(e5);
+disp("Error with random parameters")
+disp(e)
 
-% write training algorithm
-while e ~= 0 % executes while the total error is not 0
-	% here should be your code of parameter update
-%   calculate output for current example
-% 
-%   calculate error for current example
-% 
-%   update parameters using current inputs ant current error
-% 	w1 = 
-%   w2 = 
-%   b = 
-% 
-%   Test how good are updated parameters (weights) on all examples used for training
-%   calculate outputs and errors for all 5 examples using current values of the parameter set {w1, w2, b}
-%   calculate 'v1', 'v2', 'v3',... 'v5'
-% 
-%   calculate 'y1', ..., 'y5'
-%     
-%   calculate 'e1', ... 'e5'
-    
-	% calculate the total error for these 5 inputs 
-	e = abs(e1) + abs(e2) + abs(e3) + abs(e4) + abs(e5);
+% Training loop
+eta = 0.4;
+while abs(e) > 0.01
+    e = 0;
+    for indx = 1:5
+        v = x1(indx) * w1 + x2(indx) * w2 + b;
+        if v > 0
+            y = 1;
+        else
+            y = -1;
+        end
+	    tmpE = T(indx) - y;
+
+        w1 = w1 + eta * tmpE * x1(indx);
+        w2 = w2 + eta * tmpE * x2(indx);
+        b = b + eta * tmpE * 1;
+    end
+    disp("Output")
+    disp(w1)
+    disp(w2)
+    disp(b)
+    disp("--------------")
+    for indx = 1:5
+        v = x1(indx) * w1 + x2(indx) * w2 + b;
+        if v > 0
+            y = 1;
+        else
+            y = -1;
+        end
+	    tmpE = T(indx) - y;
+
+        w1 = w1 + eta * tmpE * x1(indx);
+        w2 = w2 + eta * tmpE * x2(indx);
+        b = b + eta * tmpE * 1;
+        e = e + abs(tmpE);
+    end
+end
+
+disp("Final results:")
+fprintf('w1: %d\n', w1)
+fprintf('w2: %d\n', w2)
+fprintf('b: %d\n', b) 
+
+disp("Checking results")
+for indx = 1:5
+    v = x1(indx) * w1 + x2(indx) * w2 + b;
+    if v > 0
+        y = 1;
+    else
+        y = -1;
+    end
+
+    fprintf('Correct result: %d. Predicted result: %d\n', T(indx), y);
 end
