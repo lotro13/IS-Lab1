@@ -1,7 +1,3 @@
-clc;
-clear all;
-close all;
-
 % Classification using perceptron
 
 % Reading apple images
@@ -194,7 +190,7 @@ disp("Checking results")
 
 xT1=[hsv_value_P4 hsv_value_A6 hsv_value_A7 hsv_value_A8 hsv_value_A9];
 xT2=[metric_P4 metric_A6 metric_A7 metric_A8 metric_A9];
-TT=[-1;1;1;1;1];
+TT=[-1;1;1;1;1]; % <- ČIA ANKSČIAU BUVO KLAIDA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 for indx = 1:5
     v = xT1(indx) * w1 + xT2(indx) * w2 + b;
@@ -204,5 +200,5 @@ for indx = 1:5
         y = -1;
     end
 
-    fprintf('Correct result: %d. Predicted result: %d\n', TT(indx), y);
+    fprintf('Correct result: %d. Predicted result: %d\n', T(indx), y);
 end
